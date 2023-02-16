@@ -230,7 +230,11 @@ const generateSchemaForModel = (model, sourceFile, config, _prismaOptions) => {
 
       initializer(writer) {
         writer.write('z.object(').inlineBlock(() => {
-          model.fields.filter(f => f.kind !== 'object').forEach(field => {
+          model.fields.filter(f => f.kind !== 'object').filter(f => {
+            var _f$documentation;
+
+            return !getZodDocElements((_f$documentation = f.documentation) != null ? _f$documentation : '').includes('omit()');
+          }).forEach(field => {
             writeArray(writer, getJSDocs(field.documentation));
             writer.write(`${field.name}: ${getZodConstructor(field)}`).write(',').newLine();
           });

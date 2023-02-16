@@ -258,6 +258,10 @@ By specifying the custom schema within the parentheses you can replace the autog
 
 > For instance if you wanted to use `z.preprocess`
 
+### Omit
+
+Add the special comment directive `@zod.omit()` to omit a field from the generated zod schema.
+
 ### JSON Fields
 
 JSON fields in Prisma disallow null values. This is to disambiguate between setting a field's value to NULL in the database and having

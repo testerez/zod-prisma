@@ -8,7 +8,7 @@ import {
 } from 'ts-morph'
 import { Config, PrismaOptions } from './config'
 import { dotSlash, needsRelatedModel, useModelNames, writeArray } from './util'
-import { getJSDocs } from './docs'
+import { getJSDocs, getZodDocElements } from './docs'
 import { getZodConstructor } from './types'
 
 export const writeImportsForModel = (
@@ -145,6 +145,10 @@ export const generateSchemaForModel = (
 						.inlineBlock(() => {
 							model.fields
 								.filter((f) => f.kind !== 'object')
+								.filter(
+									(f) =>
+										!getZodDocElements(f.documentation ?? '').includes('omit()')
+								)
 								.forEach((field) => {
 									writeArray(writer, getJSDocs(field.documentation))
 									writer

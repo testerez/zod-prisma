@@ -29,4 +29,6 @@ model Post {
   /// The actual contents of the post.
   /// @zod.max(10240)
   contents String
+
+  createdAt DateTime @default(now()) /// @zod.omit()
 }
